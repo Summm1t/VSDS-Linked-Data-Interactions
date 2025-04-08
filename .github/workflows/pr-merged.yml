@@ -73,6 +73,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
+      - name: Create package
+        if: ${{ env.ANALYSE_PACKAGE != true }}
+        run: |
+          mvn -B install -Dparallel=all -DperCoreThreadCount=true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
       - name: Publish Package
         if: ${{ env.DEPLOY_PACKAGE_TO_OSSRH == true }}
         run: mvn deploy -DskipTests -Dmaven.javadoc.skip=true -B -V
