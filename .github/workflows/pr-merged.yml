@@ -16,6 +16,7 @@ env:
   DISCOVERER_IMAGE_NAME: ldes-discoverer
   SONAR_PROJECT_KEY: ${{ vars.SONAR_PROJECT_KEY || 'Informatievlaanderen_VSDS-Linked-Data-Interactions' }}
   DOCKER_USER_ACCOUNT: ${{ vars.DOCKER_USER_ACCOUNT || 'ldes' }}
+  DEPLOY_PACKAGE_TO_OSSRH: ${{ vars.DEPLOY_PACKAGE_TO_OSSRH || true }}
 
 jobs:
   build:
@@ -69,6 +70,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Publish Package
+        if: ${{ env.DEPLOY_PACKAGE_TO_OSSRH }}
         run: mvn deploy -DskipTests -Dmaven.javadoc.skip=true -B -V
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
