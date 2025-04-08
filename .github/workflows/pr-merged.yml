@@ -14,6 +14,7 @@ env:
   REGISTRY: ghcr.io
   LDIO_IMAGE_NAME: ldi-orchestrator
   DISCOVERER_IMAGE_NAME: ldes-discoverer
+  SONAR_ORGANISATION: ${{ vars.SONAR_ORGANISATION || 'informatievlaanderen' }}
   SONAR_PROJECT_KEY: ${{ vars.SONAR_PROJECT_KEY || 'Informatievlaanderen_VSDS-Linked-Data-Interactions' }}
   DOCKER_USER_ACCOUNT: ${{ vars.DOCKER_USER_ACCOUNT || 'ldes' }}
   DEPLOY_PACKAGE_TO_OSSRH: ${{ vars.DEPLOY_PACKAGE_TO_OSSRH || true }}
@@ -64,7 +65,7 @@ jobs:
           echo "version=$VERSION" >> $GITHUB_OUTPUT
       - name: Analyse package
         run: |
-          mvn -B install org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }} -Pcoverage,release -Dparallel=all -DperCoreThreadCount=true
+          mvn -B install org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }} -Dsonar.organisation=${{ env.SONAR_ORGANISATION }} -Pcoverage,release -Dparallel=all -DperCoreThreadCount=true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
