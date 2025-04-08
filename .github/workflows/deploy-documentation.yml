@@ -13,10 +13,11 @@ on:
 env:
   base_url: /VSDS-Linked-Data-Interactions
   title: "Linked Data Interactions"
+  DEPLOY_DOCUMENTATION: ${{ vars.DEPLOY_DOCUMENTATION || true }}
 
 jobs:
-
   build:
+    if: ${{ env.DEPLOY_DOCUMENTATION == true }}
     runs-on: ubuntu-latest
     permissions:
       contents: read

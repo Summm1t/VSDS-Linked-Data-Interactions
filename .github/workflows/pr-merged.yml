@@ -66,7 +66,7 @@ jobs:
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Analyse package
-        if: ${{ env.ANALYSE_PACKAGE }}
+        if: ${{ env.ANALYSE_PACKAGE == true }}
         run: |
           mvn -B install org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }} -Dsonar.organization=${{ env.SONAR_ORGANIZATION }} -Pcoverage,release -Dparallel=all -DperCoreThreadCount=true
         env:
@@ -74,7 +74,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Publish Package
-        if: ${{ env.DEPLOY_PACKAGE_TO_OSSRH }}
+        if: ${{ env.DEPLOY_PACKAGE_TO_OSSRH == true }}
         run: mvn deploy -DskipTests -Dmaven.javadoc.skip=true -B -V
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
