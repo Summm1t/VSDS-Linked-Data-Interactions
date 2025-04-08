@@ -13,7 +13,7 @@ on:
     types: [ opened, synchronize, reopened ]
 
 env:
-  SONAR_PROJECT_KEY: ${{ vars.SONAR_PROJECT_KEY || Informatievlaanderen_VSDS-Linked-Data-Interactions }}
+  SONAR_PROJECT_KEY: ${{ vars.SONAR_PROJECT_KEY || 'Informatievlaanderen_VSDS-Linked-Data-Interactions' }}
 
 jobs:
   build:

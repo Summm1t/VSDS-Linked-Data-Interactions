@@ -14,7 +14,7 @@ env:
   REGISTRY: ghcr.io
   LDIO_IMAGE_NAME: ldi-orchestrator
   DISCOVERER_IMAGE_NAME: ldes-discoverer
-  SONAR_PROJECT_KEY: ${{ vars.SONAR_PROJECT_KEY || Informatievlaanderen_VSDS-Linked-Data-Interactions }}
+  SONAR_PROJECT_KEY: ${{ vars.SONAR_PROJECT_KEY || 'Informatievlaanderen_VSDS-Linked-Data-Interactions' }}
 
 jobs:
   build:
