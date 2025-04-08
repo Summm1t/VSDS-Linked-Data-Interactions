@@ -18,6 +18,7 @@ env:
   SONAR_PROJECT_KEY: ${{ vars.SONAR_PROJECT_KEY || 'Informatievlaanderen_VSDS-Linked-Data-Interactions' }}
   DOCKER_USER_ACCOUNT: ${{ vars.DOCKER_USER_ACCOUNT || 'ldes' }}
   DEPLOY_PACKAGE_TO_OSSRH: ${{ vars.DEPLOY_PACKAGE_TO_OSSRH || true }}
+  ANALYSE_PACKAGE: ${{ vars.ANALYSE_PACKAGE || true }}
 
 jobs:
   build:
@@ -63,7 +64,9 @@ jobs:
         run: |
           export VERSION=$(mvn help:evaluate -Dexpression="project.version" -q -DforceStdout)
           echo "version=$VERSION" >> $GITHUB_OUTPUT
+
       - name: Analyse package
+        if: ${{ env.ANALYSE_PACKAGE }}
         run: |
           mvn -B install org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }} -Dsonar.organization=${{ env.SONAR_ORGANIZATION }} -Pcoverage,release -Dparallel=all -DperCoreThreadCount=true
         env:
